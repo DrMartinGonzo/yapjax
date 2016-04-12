@@ -1,0 +1,18 @@
+{
+	"plugins":["plugins/markdown"],
+	"templates":{
+		"default":{
+			"outputSourceFiles":true
+		},
+		"theme":"sandstone",
+		"navType":"vertical",
+		"linenums":true,
+		"inverseNav":true
+	},
+	"markdown":{
+		"parser":"gfm"
+	},
+	"opts":{
+		"template":"node_modules/ink-docstrap/template"
+	}
+}
