@@ -1,4 +1,9 @@
 # yapjax
+[![Coverage Status](https://coveralls.io/repos/github/pocka/yapjax/badge.svg?branch=master)](https://coveralls.io/github/pocka/yapjax?branch=master)
+[![Build Status](https://travis-ci.org/pocka/yapjax.svg?branch=master)](https://travis-ci.org/pocka/yapjax)
+[![npm version](https://badge.fury.io/js/yapjax.svg)](https://badge.fury.io/js/yapjax)
+[![dependencies](https://david-dm.org/pocka/yapjax.svg)](https://david-dm.org/pocka/yapjax.svg)
+
 -- Yet Another PJAX library --
 
 yapjax is a library that enables changing page without fullpage-reload.
