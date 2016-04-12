@@ -18,7 +18,7 @@ npm install --save yapjax
 
 ## Example
 
-Of course, these examples needs to be bundled by browserify, webpack or etc...
+These examples needs to be bundled by browserify, webpack or etc...
 
 ### Simple
 ```javascript
