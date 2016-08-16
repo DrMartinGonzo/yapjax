@@ -34,6 +34,8 @@ let rewrite = (instance, contents) => {
 
 	instance._container.innerHTML = contents;
 
+	instance._container.scrollTop = 0;
+
 	// Add pjax hook
 
 	dom.select(instance._container, instance._target).forEach(node => {
