@@ -68,6 +68,33 @@ describe('internal', () => {
 
 			span.click();
 		});
+		it('should works even if clicked anchor\'s children.', (done) => {
+			let anchor = document.createElement('a');
+
+			const testUri = '/children-test/';
+
+			const mock = createMock(uri => {
+				document.body.removeChild(anchor);
+				expect(uri).to.equal(testUri);
+				done()
+			});
+
+			anchor.href = testUri;
+
+			let span = document.createElement('span');
+
+			span.innerHTML = 'foo';
+
+			anchor.addEventListener('click', ev => {
+				expect(clickHandler(mock, ev)).to.be.true;
+			});
+
+			anchor.appendChild(span);
+
+			document.body.appendChild(anchor);
+
+			span.click();
+		});
 		it('should not do anything if element that has no href value was passed', (done) => {
 			let a = document.createElement('a');
 			let testUri = '/test/';
