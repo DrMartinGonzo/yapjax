@@ -23,6 +23,7 @@ let rewrite = (instance, contents) => {
 		instance._resources.forEach(pjaxKey => {
 			let el = head.querySelector(`[pjax-key="${ pjaxKey }"]`);
 
+			el.disabled = true;
 			el.parentNode.removeChild(el);
 			el = undefined;
 		});
@@ -81,6 +82,7 @@ let rewrite = (instance, contents) => {
 		head.appendChild(newNode);
 
 		// Remove old one.
+		node.disbled = true;
 		node.parentNode.removeChild(node);
 	});
 
