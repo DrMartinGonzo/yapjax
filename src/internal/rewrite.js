@@ -6,8 +6,6 @@ import uid from 'uid';
 
 import dom from '../util/dom';
 
-import clickHandler from './click-handler';
-
 /**
  * Rewrite container html.
  * @param {Yapjax} instance - yapjax instance.
@@ -36,14 +34,6 @@ let rewrite = (instance, contents) => {
 	instance._container.innerHTML = contents;
 
 	instance._container.scrollTop = 0;
-
-	// Add pjax hook
-
-	dom.select(instance._container, instance._target).forEach(node => {
-		node.addEventListener('click', ev => {
-			clickHandler(instance, ev);
-		});
-	});
 
 	// Get title and apply it
 

@@ -6,7 +6,6 @@ import { expect } from 'chai';
 
 import sinon from 'sinon';
 
-import clickHandler from '../src/internal/click-handler';
 import dispatch from '../src/internal/dispatch';
 import listen from '../src/internal/listen';
 import loadUri from '../src/internal/load-uri';
@@ -20,97 +19,6 @@ describe('internal', () => {
 
 	afterEach(function() {
 		this.jsdom();
-	});
-
-	describe('handler', () => {
-		let createMock = (done) => {
-			return {
-				load(uri) {
-					done(uri);
-				}
-			};
-		};
-		it('calls Yapjax::load when event source has href value', (done) => {
-			let a = document.createElement('a');
-			let testUri = '/test/';
-			let mock = createMock((uri) => {
-				document.body.removeChild(a);
-				expect(uri).to.equal(testUri);
-				done();
-			});
-
-			document.body.appendChild(a);
-
-			a.href = testUri;
-
-			a.addEventListener('click', (ev) => {
-				expect(clickHandler(mock, ev)).to.be.true;
-			});
-
-			a.click();
-		});
-		it('works even if target was not `a` element', (done) => {
-			let span = document.createElement('span');
-			let testUri = '/test/';
-			let mock = createMock((uri) => {
-				document.body.removeChild(span);
-				expect(uri).to.equal(testUri);
-				done();
-			});
-
-			document.body.appendChild(span);
-
-			span.setAttribute('href', testUri);
-
-			span.addEventListener('click', (ev) => {
-				expect(clickHandler(mock, ev)).to.be.true;
-			});
-
-			span.click();
-		});
-		it('should works even if clicked anchor\'s children.', (done) => {
-			let anchor = document.createElement('a');
-
-			const testUri = '/children-test/';
-
-			const mock = createMock(uri => {
-				document.body.removeChild(anchor);
-				expect(uri).to.equal(testUri);
-				done()
-			});
-
-			anchor.href = testUri;
-
-			let span = document.createElement('span');
-
-			span.innerHTML = 'foo';
-
-			anchor.addEventListener('click', ev => {
-				expect(clickHandler(mock, ev)).to.be.true;
-			});
-
-			anchor.appendChild(span);
-
-			document.body.appendChild(anchor);
-
-			span.click();
-		});
-		it('should not do anything if element that has no href value was passed', (done) => {
-			let a = document.createElement('a');
-			let testUri = '/test/';
-			let mock = createMock((uri) => {
-				done(new Error('Should not called.'));
-			});
-			document.body.appendChild(a);
-
-			a.addEventListener('click', (ev) => {
-				if (!clickHandler(mock, ev)) {
-					done();
-				}
-			});
-
-			a.click();
-		});
 	});
 
 	describe('dispatch', () => {
@@ -166,9 +74,89 @@ describe('internal', () => {
 				load(uri) {
 					done(uri);
 				},
-				_target: 'a[data-pjax]'
+				_target: '[data-pjax]'
 			};
 		};
+		it('calls Yapjax::load when event source has href value', (done) => {
+			let a = document.createElement('a');
+			let testUri = '/test/';
+			let mock = createMock((uri) => {
+				document.body.removeChild(a);
+				expect(uri).to.equal(testUri);
+				done();
+			});
+
+			document.body.appendChild(a);
+
+			a.setAttribute('data-pjax', true);
+			a.href = testUri;
+
+			listen(mock);
+
+			a.click();
+		});
+		it('works even if target was not `a` element', (done) => {
+			let span = document.createElement('span');
+			let testUri = '/test/';
+			let mock = createMock((uri) => {
+				document.body.removeChild(span);
+				expect(uri).to.equal(testUri);
+				done();
+			});
+
+			document.body.appendChild(span);
+
+			span.setAttribute('data-pjax', true);
+			span.setAttribute('href', testUri);
+
+			listen(mock);
+
+			span.click();
+		});
+		it('should works even if clicked anchor\'s children.', (done) => {
+			let anchor = document.createElement('a');
+
+			const testUri = '/children-test/';
+
+			const mock = createMock(uri => {
+				document.body.removeChild(anchor);
+				expect(uri).to.equal(testUri);
+				done()
+			});
+
+			anchor.href = testUri;
+
+			let span = document.createElement('span');
+
+			span.innerHTML = 'foo';
+
+			anchor.appendChild(span);
+
+			document.body.appendChild(anchor);
+
+			listen(mock);
+
+			span.click();
+		});
+		it('should not do anything if element that has no href value was passed', (done) => {
+			let a = document.createElement('a');
+			let testUri = '/test/';
+			let mock = createMock((uri) => {
+				done(new Error('Should not called.'));
+			});
+			document.body.appendChild(a);
+
+			a.setAttribute('data-pjax', true);
+			a.addEventListener('click', (ev) => {
+				setTimeout(() => {
+					done()
+				}, 100)
+			});
+
+			listen(mock);
+
+			a.click();
+		});
 		it('should sets handler to element matches to selector', (done) => {
 			let testUri = '/test/';
 			let mock = createMock((uri) => {
