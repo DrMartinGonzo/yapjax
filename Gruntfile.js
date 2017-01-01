@@ -31,7 +31,8 @@ module.exports = function(grunt) {
 		browserify: {
 			options: {
 				browserifyOptions: {
-					fullPaths: false
+					fullPaths: false,
+					standalone: 'Yapjax'
 				}
 			},
 			dist: {

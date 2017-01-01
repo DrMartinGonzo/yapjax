@@ -180,4 +180,4 @@ Yapjax.prototype = {
 	}
 };
 
-export default Yapjax;
+module.exports = Yapjax;
