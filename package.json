@@ -1,6 +1,6 @@
 {
   "name": "yapjax",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Yet Another PJAX library",
   "main": "lib/index.js",
   "scripts": {
