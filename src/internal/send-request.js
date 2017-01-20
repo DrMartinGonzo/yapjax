@@ -25,7 +25,8 @@ let sendRequest = (instance, modifiedUri, requestedUri, pushState) => {
 		// uri to load
 		uri: modifiedUri,
 		// success handler
-		onload(response) {
+		onload(xhr) {
+			let response = xhr.responseText;
 			// Modify response if modifier exists
 			let contents = instance._modifier.response
 				? instance._modifier.response(response)
@@ -45,6 +46,7 @@ let sendRequest = (instance, modifiedUri, requestedUri, pushState) => {
 			instance._previousUri = modifiedUri;
 
 			dispatch(instance, 'loadcomplete', {
+				xhr: xhr,
 				response: contents
 			});
 		},
